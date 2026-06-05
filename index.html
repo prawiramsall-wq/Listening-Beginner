@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Listening Exercise</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.exercise-box{
+    background:#e9e9e9;
+    border:1px solid #cfcfcf;
+    border-radius:15px;
+    padding:30px;
+    margin-top:20px;
+}
+
+.question{
+    font-size:20px;
+    margin:25px 0;
+    line-height:1.8;
+}
+
+input{
+    width:120px;
+    padding:8px;
+    font-size:18px;
+    text-align:center;
+}
+
+.correct{
+    background:#c8f7c5;
+    border:2px solid green;
+}
+
+.wrong{
+    background:#ffd6d6;
+    border:2px solid red;
+}
+
+button{
+    font-size:18px;
+    padding:8px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+#result{
+    margin-top:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+audio{
+    width:100%;
+    margin-bottom:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Listening Exercise</h2>
+
+<audio controls>
+    <source src="audio.mp3" type="audio/mpeg">
+</audio>
+
+<p>
+If the audio player above doesn't work,
+<a href="audio.mp3" target="_blank">click here</a>
+to download the audio file.
+</p>
+
+<hr>
+
+<div class="exercise-box">
+
+<div class="question">
+1. Ben has a <input type="text" id="q1"> in the corner of his room.
+</div>
+
+<div class="question">
+2. There is a desk <input type="text" id="q2"> the window for Ben to study on.
+</div>
+
+<div class="question">
+3. Ben likes reading and has a lot of books on the
+<input type="text" id="q3">.
+</div>
+
+<div class="question">
+4. The <input type="text" id="q4">
+isn't in Ben's room. It's down the hall.
+</div>
+
+<div class="question">
+5. From his window, he can see the park and there are some
+<input type="text" id="q5"> too.
+</div>
+
+<div class="question">
+6. Ben says his room is
+<input type="text" id="q6">,
+but it's comfortable.
+</div>
+
+<button onclick="checkAnswers()">Check Answers</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+function checkAnswers(){
+
+const answers = {
+q1:"bed",
+q2:"near",
+q3:"shelf",
+q4:"bathroom",
+q5:"trees",
+q6:"small"
+};
+
+let score = 0;
+
+for(let id in answers){
+
+let input = document.getElementById(id);
+
+let userAnswer = input.value
+.trim()
+.toLowerCase();
+
+let correctAnswer = answers[id]
+.toLowerCase();
+
+if(userAnswer === correctAnswer){
+
+input.classList.remove("wrong");
+input.classList.add("correct");
+
+score++;
+
+}else{
+
+input.classList.remove("correct");
+input.classList.add("wrong");
+
+}
+}
+
+document.getElementById("result").innerHTML =
+`Score: ${score} / 6`;
+
+}
+
+</script>
+
+</body>
+</html>
