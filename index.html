@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listening Exercise - My Room</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+audio{
+    width:100%;
+    margin-bottom:15px;
+}
+
+.exercise-box{
+    background:#e9e9e9;
+    border-radius:15px;
+    padding:25px;
+    margin-top:20px;
+}
+
+.word-bank{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:25px;
+}
+
+.word{
+    background:#4CAF50;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:grab;
+    font-weight:bold;
+}
+
+.question{
+    font-size:22px;
+    margin:20px 0;
+    line-height:1.8;
+}
+
+.dropzone{
+    display:inline-block;
+    min-width:120px;
+    height:35px;
+    border:2px dashed #666;
+    background:white;
+    text-align:center;
+    line-height:35px;
+    vertical-align:middle;
+    margin:0 5px;
+}
+
+.correct{
+    background:#c8f7c5 !important;
+    border:2px solid green !important;
+}
+
+.wrong{
+    background:#ffd6d6 !important;
+    border:2px solid red !important;
+}
+
+.feedback{
+    margin-top:5px;
+    font-weight:bold;
+}
+
+button{
+    padding:12px 25px;
+    font-size:20px;
+    cursor:pointer;
+    border-radius:8px;
+}
+
+#result{
+    margin-top:20px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+h2{
+    margin-top:40px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Listening Exercise: My Room</h1>
+
+<audio controls>
+    <source src="0L1-my-room.mp3" type="audio/mpeg">
+</audio>
+
+<p>
+If the audio player above doesn't work,
+<a href="0L1-my-room.mp3" target="_blank">click here</a>
+to download the audio file.
+</p>
+
+<hr>
+
+<h2>Part 1: Drag the Words</h2>
+
+<div class="word-bank">
+    <div class="word" draggable="true" id="bed">bed</div>
+    <div class="word" draggable="true" id="by">by</div>
+    <div class="word" draggable="true" id="shelf">shelf</div>
+    <div class="word" draggable="true" id="bathroom">bathroom</div>
+    <div class="word" draggable="true" id="trees">trees</div>
+    <div class="word" draggable="true" id="small">small</div>
+</div>
+
+<div class="exercise-box">
+
+<div class="question">
+1. There is a
+<span class="dropzone" data-answer="bed"></span>
+in the corner of Ben's room.
+</div>
+
+<div class="question">
+2. The desk is
+<span class="dropzone" data-answer="by"></span>
+the window.
+</div>
+
+<div class="question">
+3. There are about 20 books on the
+<span class="dropzone" data-answer="shelf"></span>.
+</div>
+
+<div class="question">
+4. The
+<span class="dropzone" data-answer="bathroom"></span>
+is down the hall.
+</div>
+
+<div class="question">
+5. There are some
+<span class="dropzone" data-answer="trees"></span>
+outside the window.
+</div>
+
+<div class="question">
+6. Ben says his room is
+<span class="dropzone" data-answer="small"></span>,
+but comfortable.
+</div>
+
+</div>
+
+<h2>Part 2: True / False</h2>
+
+<div class="exercise-box">
+
+<div class="question">
+1. Ben has a small but nice room.<br>
+<label><input type="radio" name="tf1" value="True"> True</label>
+<label><input type="radio" name="tf1" value="False"> False</label>
+<div id="fb1" class="feedback"></div>
+</div>
+
+<div class="question">
+2. There is no desk in Ben's room.<br>
+<label><input type="radio" name="tf2" value="True"> True</label>
+<label><input type="radio" name="tf2" value="False"> False</label>
+<div id="fb2" class="feedback"></div>
+</div>
+
+<div class="question">
+3. Ben has a TV in his room.<br>
+<label><input type="radio" name="tf3" value="True"> True</label>
+<label><input type="radio" name="tf3" value="False"> False</label>
+<div id="fb3" class="feedback"></div>
+</div>
+
+<div class="question">
+4. Ben likes reading books.<br>
+<label><input type="radio" name="tf4" value="True"> True</label>
+<label><input type="radio" name="tf4" value="False"> False</label>
+<div id="fb4" class="feedback"></div>
+</div>
+
+<div class="question">
+5. The bathroom is in Ben's room.<br>
+<label><input type="radio" name="tf5" value="True"> True</label>
+<label><input type="radio" name="tf5" value="False"> False</label>
+<div id="fb5" class="feedback"></div>
+</div>
+
+<div class="question">
+6. Ben can't see the park from his room.<br>
+<label><input type="radio" name="tf6" value="True"> True</label>
+<label><input type="radio" name="tf6" value="False"> False</label>
+<div id="fb6" class="feedback"></div>
+</div>
+
+</div>
+
+<br>
+
+<button onclick="checkAnswers()">Check Answers</button>
+
+<div id="result"></div>
+
+<script>
+
+// DRAG & DROP
+
+const draggables = document.querySelectorAll('.word');
+const dropzones = document.querySelectorAll('.dropzone');
+
+draggables.forEach(item => {
+
+item.addEventListener('dragstart', e => {
+e.dataTransfer.setData('text', item.id);
+});
+
+});
+
+dropzones.forEach(zone => {
+
+zone.addEventListener('dragover', e => {
+e.preventDefault();
+});
+
+zone.addEventListener('drop', e => {
+
+e.preventDefault();
+
+const id = e.dataTransfer.getData('text');
+
+zone.innerHTML = id;
+zone.dataset.user = id;
+
+});
+
+});
+
+// CHECK ANSWERS
+
+function checkAnswers(){
+
+let score = 0;
+
+// PART 1
+
+dropzones.forEach(zone => {
+
+if(zone.dataset.user === zone.dataset.answer){
+
+zone.classList.add("correct");
+zone.classList.remove("wrong");
+
+score++;
+
+}else{
+
+zone.classList.add("wrong");
+zone.classList.remove("correct");
+
+zone.innerHTML =
+(zone.dataset.user || "blank") +
+"<br><small>✓ " +
+zone.dataset.answer +
+"</small>";
+
+}
+
+});
+
+// PART 2
+
+const tfAnswers = {
+
+tf1:"True",
+tf2:"False",
+tf3:"False",
+tf4:"True",
+tf5:"False",
+tf6:"False"
+
+};
+
+for(let key in tfAnswers){
+
+const selected =
+document.querySelector(`input[name="${key}"]:checked`);
+
+const feedback =
+document.getElementById("fb"+key.replace("tf",""));
+
+if(selected){
+
+if(selected.value === tfAnswers[key]){
+
+score++;
+
+feedback.innerHTML =
+"<span style='color:green'>✓ Correct</span>";
+
+}else{
+
+feedback.innerHTML =
+"<span style='color:red'>✗ Correct Answer: "
++ tfAnswers[key] +
+"</span>";
+
+}
+
+}else{
+
+feedback.innerHTML =
+"<span style='color:red'>Correct Answer: "
++ tfAnswers[key] +
+"</span>";
+
+}
+
+}
+
+let percent = Math.round((score/12)*100);
+
+document.getElementById("result").innerHTML =
+`
+Score: ${score}/12
+<br>
+Percentage: ${percent}%
+`;
+
+}
+
+</script>
+
+</body>
+</html>
